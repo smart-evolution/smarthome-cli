@@ -1,3 +1,5 @@
+//usr/local/go/bin/go run $0 $@; exit $?
+
 package main
 
 import (
@@ -47,7 +49,6 @@ func main() {
     default:
         response = "Invalid command"
     }
-
 
     fmt.Println(response)
 }

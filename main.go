@@ -28,7 +28,8 @@ func main() {
     if len(os.Args) > 1 {
         cmd = os.Args[1]
     } else {
-        cmd = ""
+        fmt.Println("please add cmd parameter after script")
+        os.Exit(1)
     }
 
     var response string

@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/smart-evolution/smarthome.svg?branch=master)](https://travis-ci.org/smart-evolution/smarthome)
+
 # smarthome-cli
 CLI for smarthome services
 

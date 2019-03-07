@@ -3,6 +3,10 @@ GOLINT=golint
 
 .PHONY: install
 install:
+	$(GOCMD) get golang.org/x/lint/golint
+
+.PHONY: deploy
+deploy:
 	./scripts/install/install.sh
 
 .PHONY: version
@@ -24,6 +28,7 @@ help:
 	@echo  'Available tasks:'
 	@echo  '* Installation:'
 	@echo  '- install         - Phony task that installs script globally'
+	@echo  '- deploy          - Deploys script'
 	@echo  ''
 	@echo  '* Quality:'
 	@echo  '- lint            - Phony task that runs all linting tasks'

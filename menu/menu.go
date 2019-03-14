@@ -1,6 +1,7 @@
 package menu
 
 import (
+	"github.com/smart-evolution/smarthome-cli/menu/connect"
 	"github.com/smart-evolution/smarthome-cli/menu/status"
 	"github.com/smart-evolution/smarthome-cli/tree"
 	"net"
@@ -28,7 +29,7 @@ type Menu struct {
 func New() *Menu {
 	connectItem := Item{
 		label:   "connect",
-		handler: status.Handler,
+		handler: connect.Handler,
 	}
 	connectChildren := []tree.Node{}
 	connectNode := *tree.NewNode(connectItem, connectChildren)

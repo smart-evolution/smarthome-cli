@@ -1,4 +1,4 @@
-package _default
+package connect
 
 import (
 	"fmt"
@@ -6,5 +6,5 @@ import (
 )
 
 func Handler(conn net.Conn) {
-	fmt.Println("Invalid command")
+	fmt.Println("connect")
 }

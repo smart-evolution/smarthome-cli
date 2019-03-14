@@ -1,10 +1,9 @@
 package utils
 
 func MsgConstructor(cmd string) []byte {
-    msgString :=  `{
+	msgString := `{
         "cmd": "` + cmd + `"
     }`
 
-    return []byte(msgString)
+	return []byte(msgString)
 }
-

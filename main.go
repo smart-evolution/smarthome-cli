@@ -3,18 +3,11 @@
 package main
 
 import (
-	"fmt"
+    "fmt"
+    "github.com/smart-evolution/smarthome-cli/menu"
     "net"
     "os"
 )
-
-func msgConstructor(cmd string) []byte {
-    msgString :=  `{
-        "cmd": "` + cmd + `"
-    }`
-
-    return []byte(msgString)
-}
 
 func main() {
     conn, err := net.Dial("tcp", os.Getenv("SMARTHOME_CLI_SRV"))
@@ -32,24 +25,6 @@ func main() {
         os.Exit(1)
     }
 
-    var response string
-    buff := make([]byte, 512)
-
-    switch cmd {
-    case "status":
-        msg := msgConstructor("status")
-        _, err = conn.Write(msg)
-        n, err := conn.Read(buff)
-
-        if err != nil {
-            fmt.Println("error reading cli message")
-
-        }
-
-        response = string(buff[:n])
-    default:
-        response = "Invalid command"
-    }
-
-    fmt.Println(response)
+    m := menu.New()
+    m.Execute(cmd, conn)
 }

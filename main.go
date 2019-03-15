@@ -4,7 +4,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/smart-evolution/smarthome-cli/menu"
+	"github.com/smart-evolution/smarthome-cli/commands/connect"
+	"github.com/smart-evolution/smarthome-cli/commands/default"
+	"github.com/smart-evolution/smarthome-cli/commands/status"
 	"net"
 	"os"
 )
@@ -25,6 +27,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	m := menu.New()
-	m.Execute(cmd, conn)
+	switch cmd {
+	case "connect":
+		connect.Handler(conn)
+	case "status":
+		status.Handler(conn)
+	default:
+		_default.Handler(conn)
+	}
 }

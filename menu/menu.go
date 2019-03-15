@@ -1,8 +1,8 @@
 package menu
 
 import (
-	"github.com/smart-evolution/smarthome-cli/menu/connect"
-	"github.com/smart-evolution/smarthome-cli/menu/status"
+	"github.com/smart-evolution/smarthome-cli/commands/connect"
+	"github.com/smart-evolution/smarthome-cli/commands/status"
 	"github.com/smart-evolution/smarthome-cli/tree"
 	"net"
 )
@@ -58,8 +58,27 @@ func New() *Menu {
 	}
 }
 
-func (m *Menu) Execute(cmd string, conn net.Conn) {
-	criterion := func(node tree.Node) bool {
+type Commander struct {
+	state	[]string
+}
+
+func (m *Menu) Execute(cmd []string, conn net.Conn) {
+	var cmdHandler Handler
+
+	for _, c := range cmd {
+		node := m.Root()
+
+		for _, d := range node.Children() {
+			item := d.Value()
+			if i, ok := item.(Item); ok {
+				if i.Label() == c {
+
+				}
+			}
+		}
+	}
+
+	/*criterion := func(node tree.Node) bool {
 		v := node.Value()
 		if mi, ok := v.(Item); ok {
 			return mi.Label() == cmd
@@ -72,5 +91,5 @@ func (m *Menu) Execute(cmd string, conn net.Conn) {
 
 	if i, ok := cmdItem.(Item); ok {
 		i.Handler(conn)
-	}
+	}*/
 }

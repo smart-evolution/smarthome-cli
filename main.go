@@ -7,18 +7,10 @@ import (
 	"github.com/smart-evolution/smarthome-cli/commands/connect"
 	"github.com/smart-evolution/smarthome-cli/commands/default"
 	"github.com/smart-evolution/smarthome-cli/commands/status"
-	"net"
 	"os"
 )
 
 func main() {
-	conn, err := net.Dial("tcp", os.Getenv("SMARTHOME_CLI_SRV"))
-
-	if err != nil {
-		fmt.Println("error connecting to the smarthome cli server")
-		os.Exit(1)
-	}
-
 	var cmd string
 	if len(os.Args) > 1 {
 		cmd = os.Args[1]
@@ -29,10 +21,10 @@ func main() {
 
 	switch cmd {
 	case "connect":
-		connect.Handler(conn)
+		connect.Handler()
 	case "status":
-		status.Handler(conn)
+		status.Handler()
 	default:
-		_default.Handler(conn)
+		_default.Handler()
 	}
 }

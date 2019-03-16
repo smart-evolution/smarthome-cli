@@ -2,9 +2,8 @@ package _default
 
 import (
 	"fmt"
-	"net"
 )
 
-func Handler(conn net.Conn) {
+func Handler() {
 	fmt.Println("Invalid command")
 }

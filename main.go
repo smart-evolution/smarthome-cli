@@ -4,52 +4,27 @@ package main
 
 import (
 	"fmt"
-    "net"
-    "os"
+	"github.com/smart-evolution/smarthome-cli/commands/connect"
+	"github.com/smart-evolution/smarthome-cli/commands/default"
+	"github.com/smart-evolution/smarthome-cli/commands/status"
+	"os"
 )
 
-func msgConstructor(cmd string) []byte {
-    msgString :=  `{
-        "cmd": "` + cmd + `"
-    }`
-
-    return []byte(msgString)
-}
-
 func main() {
-    conn, err := net.Dial("tcp", os.Getenv("SMARTHOME_CLI_SRV"))
+	var cmd string
+	if len(os.Args) > 1 {
+		cmd = os.Args[1]
+	} else {
+		fmt.Println("please add cmd parameter after script")
+		os.Exit(1)
+	}
 
-    if err != nil {
-        fmt.Println("error connecting to the smarthome cli server")
-        os.Exit(1)
-    }
-
-    var cmd string
-    if len(os.Args) > 1 {
-        cmd = os.Args[1]
-    } else {
-        fmt.Println("please add cmd parameter after script")
-        os.Exit(1)
-    }
-
-    var response string
-    buff := make([]byte, 512)
-
-    switch cmd {
-    case "status":
-        msg := msgConstructor("status")
-        _, err = conn.Write(msg)
-        n, err := conn.Read(buff)
-
-        if err != nil {
-            fmt.Println("error reading cli message")
-
-        }
-
-        response = string(buff[:n])
-    default:
-        response = "Invalid command"
-    }
-
-    fmt.Println(response)
+	switch cmd {
+	case "connect":
+		connect.Handler()
+	case "status":
+		status.Handler()
+	default:
+		_default.Handler()
+	}
 }

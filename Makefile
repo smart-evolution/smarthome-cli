@@ -1,8 +1,10 @@
 GOCMD=go
 GOLINT=golint
+GOFMT=gofmt
 
 .PHONY: install
 install:
+	$(GOCMD) get golang.org/x/lint/golint
 	$(GOCMD) get golang.org/x/lint/golint
 
 .PHONY: deploy
@@ -22,6 +24,10 @@ version:
 lint:
 	$(GOLINT) ./...
 	$(GOCMD) vet ./...
+
+.PHONY: fix
+fix:
+	$(GOFMT) -w .
 
 .PHONY: help
 help:

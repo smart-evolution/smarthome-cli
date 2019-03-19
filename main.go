@@ -7,8 +7,11 @@ import (
 	"github.com/smart-evolution/smarthome-cli/commands/connect"
 	"github.com/smart-evolution/smarthome-cli/commands/default"
 	"github.com/smart-evolution/smarthome-cli/commands/status"
+	"github.com/smart-evolution/smarthome-cli/commands/version"
 	"os"
 )
+
+//go:generate bash ./scripts/version.sh ./scripts/version_tpl.txt ./utils/version.go
 
 func main() {
 	var cmd string
@@ -24,6 +27,8 @@ func main() {
 		connect.Handler()
 	case "status":
 		status.Handler()
+	case "version":
+		version.Handler()
 	default:
 		_default.Handler()
 	}

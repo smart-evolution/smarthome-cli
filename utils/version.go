@@ -1,4 +1,4 @@
 package utils
 
 // VERSION - current smarthome-cli version
-var VERSION = %VERSION%
+var VERSION = "v0.2.0"

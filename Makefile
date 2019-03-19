@@ -15,6 +15,8 @@ deploy:
 version:
 	git tag $(V)
 	./scripts/changelog.sh
+	go generate
+	git add ./version.go || true
 	git add ./docs/changelogs/CHANGELOG_$(V).md
 	git commit --allow-empty -m "Build $(V)"
 	git tag --delete $(V)
@@ -22,6 +24,7 @@ version:
 
 .PHONY: lint
 lint:
+	./scripts/gofmt_test.sh
 	$(GOLINT) ./...
 	$(GOCMD) vet ./...
 

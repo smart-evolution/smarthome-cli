@@ -1,0 +1,4 @@
+package main
+
+// VERSION - current smarthome-cli version
+var VERSION = %VERSION%

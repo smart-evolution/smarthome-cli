@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/smart-evolution/smarthome-cli/commands/connect"
 	"github.com/smart-evolution/smarthome-cli/commands/default"
+	"github.com/smart-evolution/smarthome-cli/commands/send"
 	"github.com/smart-evolution/smarthome-cli/commands/status"
 	"github.com/smart-evolution/smarthome-cli/commands/version"
 	"os"
@@ -25,6 +26,8 @@ func main() {
 	switch cmd {
 	case "connect":
 		connect.Handler()
+	case "send":
+		send.Handler()
 	case "status":
 		status.Handler()
 	case "version":

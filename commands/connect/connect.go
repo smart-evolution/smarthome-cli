@@ -1,12 +1,22 @@
 package connect
 
 import (
+	"bufio"
 	"fmt"
 	"net"
 	"os"
+	"strings"
 )
 
+
+type CmdMap	map[string][]string
+
 func Handler() {
+	var jeepComm = make(CmdMap)
+
+	jeepComm["forward"] = []string{"CMD012", "CMD022"}
+	jeepComm["stop"] = []string{"CMD010", "CMD020"}
+
 	var device string
 	if len(os.Args) > 2 {
 		device = os.Args[2]
@@ -22,27 +32,23 @@ func Handler() {
 		os.Exit(1)
 	}
 
-	var cmd string
-	if len(os.Args) > 3 {
-		cmd = os.Args[3]
-	} else {
-		fmt.Println("device command required")
-		os.Exit(1)
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("CMD: ")
+		input, _ := reader.ReadString('\n')
+		cmd := strings.TrimSpace(input)
+
+		if cmd == "disconnect" {
+			break
+		}
+
+		tC := jeepComm[cmd]
+
+		for _, c := range tC {
+			_, err = conn.Write([]byte(c))
+			if err != nil {
+				fmt.Println("RES: sending command failed " + c)
+			}
+		}
 	}
-
-	_, err = conn.Write([]byte(cmd))
-	if err != nil {
-		fmt.Println("error sending command " + cmd)
-		os.Exit(1)
-	}
-
-	buff := make([]byte, 512)
-	n, err := conn.Read(buff)
-
-	if err != nil {
-		fmt.Println("error reading message from device")
-	}
-
-	response := string(buff[:n])
-	fmt.Println(response)
 }

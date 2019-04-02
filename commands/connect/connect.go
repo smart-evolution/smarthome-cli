@@ -10,17 +10,17 @@ import (
 
 var comms = map[string]map[string][]string{
 	"jeep": map[string][]string{
-		"w": []string{"CMD012", "CMD022"},
 		"s": []string{"CMD010", "CMD020"},
-		"a": []string{"CMD012", "CMD122"},
-		"d": []string{"CMD112", "CMD022"},
-		"x": []string{"CMD112", "CMD122"},
-
+		"w": []string{"CMD010", "CMD020", "CMD012", "CMD022"},
+		"a": []string{"CMD010", "CMD020", "CMD012", "CMD122"},
+		"d": []string{"CMD010", "CMD020", "CMD112", "CMD022"},
+		"x": []string{"CMD010", "CMD020", "CMD112", "CMD122"},
 	},
 }
 
 func Handler() {
 	var device string
+
 	if len(os.Args) > 2 {
 		device = os.Args[2]
 	} else {
@@ -51,6 +51,12 @@ func Handler() {
 	}
 
 	devType := string(buff[:n])
+
+	if _, ok := comms[devType]; !ok {
+		fmt.Println("unknown device type '" + devType + "'")
+		os.Exit(1)
+	}
+
 	fmt.Println("connected to device type '" + devType + "'")
 
 	for {

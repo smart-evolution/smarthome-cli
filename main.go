@@ -1,4 +1,4 @@
-//usr/local/go/bin/go run $0 $@; exit $?
+//usr/local/go/bin/go run $0 "$@"; exit $?
 
 package main
 
@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/smart-evolution/smarthome-cli/commands/connect"
 	"github.com/smart-evolution/smarthome-cli/commands/default"
+	"github.com/smart-evolution/smarthome-cli/commands/scan"
 	"github.com/smart-evolution/smarthome-cli/commands/send"
 	"github.com/smart-evolution/smarthome-cli/commands/status"
 	"github.com/smart-evolution/smarthome-cli/commands/version"
@@ -30,6 +31,8 @@ func main() {
 		send.Handler()
 	case "status":
 		status.Handler()
+	case "scan":
+		scan.Handler()
 	case "version":
 		version.Handler()
 	default:

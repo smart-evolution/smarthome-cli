@@ -7,16 +7,13 @@ import (
 	"time"
 )
 
-var
-(
-	addrs []string
-)
+var addrs []string
 
 func Handler() {
 	for i := 1; i <= 255; i++ {
 		fmt.Print("\033[H\033[2J")
 		addr := "192.168.1." + strconv.Itoa(i)
-		fmt.Print("checking " + strconv.Itoa(i) + " address out of 255")
+		fmt.Println("checking " + strconv.Itoa(i) + " address out of 255")
 
 		d := net.Dialer{Timeout: time.Duration(500) * time.Millisecond}
 		conn, err := d.Dial("tcp", addr + ":81")

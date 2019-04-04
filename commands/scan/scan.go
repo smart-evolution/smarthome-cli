@@ -16,7 +16,7 @@ func Handler() {
 		fmt.Println("checking " + strconv.Itoa(i) + " address out of 255")
 
 		d := net.Dialer{Timeout: time.Duration(500) * time.Millisecond}
-		conn, err := d.Dial("tcp", addr + ":81")
+		conn, err := d.Dial("tcp", addr+":81")
 		if err != nil {
 			continue
 		}
@@ -35,7 +35,7 @@ func Handler() {
 		}
 
 		devType := string(buff[:n])
-		addrs = append(addrs, addr + "::" + devType)
+		addrs = append(addrs, addr+"::"+devType)
 	}
 
 	fmt.Println(strconv.Itoa(len(addrs)) + " compliant devices found")

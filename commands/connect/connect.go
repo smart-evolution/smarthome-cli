@@ -15,6 +15,7 @@ var comms = map[string]map[string][]string{
 		"a": []string{"CMD010", "CMD020", "CMD012", "CMD122"},
 		"d": []string{"CMD010", "CMD020", "CMD112", "CMD022"},
 		"x": []string{"CMD010", "CMD020", "CMD112", "CMD122"},
+		"look": []string{"CMDLOK"},
 	},
 }
 

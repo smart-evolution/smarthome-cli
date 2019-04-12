@@ -15,6 +15,7 @@ var comms = map[string]map[string][]string{
 		"a": []string{"CMD010", "CMD020", "CMD012", "CMD122"},
 		"d": []string{"CMD010", "CMD020", "CMD112", "CMD022"},
 		"x": []string{"CMD010", "CMD020", "CMD112", "CMD122"},
+		"l": []string{"CMDLOK"},
 	},
 }
 
@@ -58,6 +59,7 @@ func Handler() {
 	}
 
 	fmt.Println("connected to device type '" + devType + "'")
+	resBuff := make([]byte, 512)
 
 	for {
 		reader := bufio.NewReader(os.Stdin)
@@ -76,6 +78,19 @@ func Handler() {
 			_, err = conn.Write([]byte(c))
 			if err != nil {
 				fmt.Println("RES: sending command failed " + c)
+				break
+			}
+
+			if c == "CMDLOK" {
+				n, err := conn.Read(resBuff)
+
+				if err != nil {
+					fmt.Println("RES: error reading message from device")
+					break
+				}
+
+				response := string(resBuff[:n])
+				fmt.Println(response)
 			}
 		}
 	}

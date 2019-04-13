@@ -3,22 +3,12 @@ package proxy
 import (
 	"bufio"
 	"fmt"
+	"github.com/smart-evolution/smarthome-cli/cmdapi"
 	"github.com/smart-evolution/smarthome-cli/utils"
 	"net"
 	"os"
 	"strings"
 )
-
-var comms = map[string]map[string][]string{
-	"jeep": map[string][]string{
-		"s": []string{"CMD010", "CMD020"},
-		"w": []string{"CMD010", "CMD020", "CMD012", "CMD022"},
-		"a": []string{"CMD010", "CMD020", "CMD012", "CMD122"},
-		"d": []string{"CMD010", "CMD020", "CMD112", "CMD022"},
-		"x": []string{"CMD010", "CMD020", "CMD112", "CMD122"},
-		"l": []string{"CMDLOK"},
-	},
-}
 
 func Handler() {
 	conn, err := net.Dial("tcp", os.Getenv("SMARTHOME_CLI_SRV"))
@@ -60,7 +50,7 @@ func Handler() {
 			break
 		}
 
-		hardwareComms := comms[devType][cmd]
+		hardwareComms := cmdapi.Comms[devType][cmd]
 
 		for _, c := range hardwareComms {
 			_, err = conn.Write([]byte(c))

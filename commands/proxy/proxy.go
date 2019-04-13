@@ -1,17 +1,24 @@
-package connect
+package proxy
 
 import (
 	"bufio"
 	"fmt"
 	"github.com/smart-evolution/smarthome-cli/cmdapi"
+	"github.com/smart-evolution/smarthome-cli/utils"
 	"net"
 	"os"
 	"strings"
 )
 
 func Handler() {
-	var device string
+	conn, err := net.Dial("tcp", os.Getenv("SMARTHOME_CLI_SRV"))
 
+	if err != nil {
+		fmt.Println("error connecting to the smarthome cli server")
+		os.Exit(1)
+	}
+
+	var device string
 	if len(os.Args) > 2 {
 		device = os.Args[2]
 	} else {
@@ -19,35 +26,16 @@ func Handler() {
 		os.Exit(1)
 	}
 
-	conn, err := net.Dial("tcp", device)
-
-	if err != nil {
-		fmt.Println("error connecting device " + device)
-		os.Exit(1)
-	}
-
-	_, err = conn.Write([]byte("CMDWHO"))
-
-	if err != nil {
-		fmt.Println("error getting device type")
-		os.Exit(1)
-	}
-
 	buff := make([]byte, 512)
+	msg := utils.MsgConstructor("proxy", device)
+	_, err = conn.Write(msg)
 	n, err := conn.Read(buff)
 
 	if err != nil {
-		fmt.Println("error retrieving device type")
-		os.Exit(1)
+		fmt.Println("error reading cli message")
 	}
 
 	devType := string(buff[:n])
-
-	if _, ok := cmdapi.Comms[devType]; !ok {
-		fmt.Println("unknown device type '" + devType + "'")
-		os.Exit(1)
-	}
-
 	fmt.Println("connected to device type '" + devType + "'")
 	resBuff := make([]byte, 512)
 

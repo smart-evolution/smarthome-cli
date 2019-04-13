@@ -16,7 +16,7 @@ func Handler() {
 	}
 
 	buff := make([]byte, 512)
-	msg := utils.MsgConstructor("status")
+	msg := utils.MsgConstructor("status", "")
 	_, err = conn.Write(msg)
 	n, err := conn.Read(buff)
 

@@ -57,11 +57,6 @@ func Handler() {
 		input, _ := reader.ReadString('\n')
 		cmd := strings.TrimSpace(input)
 
-		if cmd == "disconnect" {
-			conn.Close()
-			break
-		}
-
 		hardwareComms := cmdapi.Comms[devType][cmd]
 
 		for _, c := range hardwareComms {
@@ -81,6 +76,9 @@ func Handler() {
 
 				response := string(resBuff[:n])
 				fmt.Println(response)
+			} else if c == "CMDDIS" {
+				conn.Close()
+				os.Exit(0)
 			}
 		}
 	}

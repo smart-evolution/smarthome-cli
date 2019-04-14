@@ -72,13 +72,13 @@ func Handler() {
 				if err != nil {
 					fmt.Println("RES: error reading message from device")
 					break
-				} else if c == "CMDDIS" {
-					conn.Close()
-					os.Exit(0)
 				}
 
 				response := string(resBuff[:n])
 				fmt.Println(response)
+			} else if c == "CMDDIS" {
+				conn.Close()
+				os.Exit(0)
 			}
 		}
 	}

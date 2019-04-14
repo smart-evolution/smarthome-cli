@@ -57,11 +57,6 @@ func Handler() {
 		input, _ := reader.ReadString('\n')
 		cmd := strings.TrimSpace(input)
 
-		if cmd == "disconnect" {
-			conn.Close()
-			break
-		}
-
 		hardwareComms := cmdapi.Comms[devType][cmd]
 
 		for _, c := range hardwareComms {
@@ -77,6 +72,9 @@ func Handler() {
 				if err != nil {
 					fmt.Println("RES: error reading message from device")
 					break
+				} else if c == "CMDDIS" {
+					conn.Close()
+					os.Exit(0)
 				}
 
 				response := string(resBuff[:n])

@@ -12,11 +12,9 @@ var addrs []string
 
 func scan(wg *sync.WaitGroup, ip string) {
 	defer wg.Done()
-	//		fmt.Print("\033[H\033[2J")
-	//		fmt.Println("checking " + strconv.Itoa(i) + " address out of 255")
 
 	d := net.Dialer{Timeout: time.Duration(1000) * time.Millisecond}
-	conn, err := d.Dial("tcp", ip + ":81")
+	conn, err := d.Dial("tcp", ip+":81")
 	if err != nil {
 		return
 	}

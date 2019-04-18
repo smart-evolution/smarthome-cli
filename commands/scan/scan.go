@@ -3,7 +3,9 @@ package scan
 import (
 	"fmt"
 	"net"
+	"os"
 	"strconv"
+	"strings"
 	"sync"
 	"time"
 )
@@ -16,14 +18,12 @@ func scan(wg *sync.WaitGroup, ip string) {
 	d := net.Dialer{Timeout: time.Duration(1000) * time.Millisecond}
 	conn, err := d.Dial("tcp", ip+":81")
 	if err != nil {
-		fmt.Println("error dialing to " + ip)
 		return
 	}
 
 	_, err = conn.Write([]byte("CMDWHO"))
 
 	if err != nil {
-		fmt.Println("error seinding CMDWHO to " + ip)
 		return
 	}
 
@@ -31,7 +31,6 @@ func scan(wg *sync.WaitGroup, ip string) {
 	n, err := conn.Read(buff)
 
 	if err != nil {
-		fmt.Println("error reading CMDWHO response from " + ip)
 		return
 	}
 
@@ -40,10 +39,20 @@ func scan(wg *sync.WaitGroup, ip string) {
 }
 
 func Handler() {
-	var wg sync.WaitGroup
+	var (
+		wg       sync.WaitGroup
+		addrBase string
+	)
+
+	if len(os.Args) > 2 {
+		addrBase = os.Args[2]
+	} else {
+		fmt.Println("address base required")
+		os.Exit(1)
+	}
 
 	for i := 1; i <= 255; i++ {
-		ip := "192.168.1." + strconv.Itoa(i)
+		ip := strings.Replace(addrBase, "_", "", 1) + strconv.Itoa(i)
 		wg.Add(1)
 		go scan(&wg, ip)
 	}

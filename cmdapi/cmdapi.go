@@ -5,7 +5,7 @@ var (
 		"jeep-v0.2.2": "jeep-api-v0.1.0",
 	}
 	Comms = map[string]map[string][]string{
-		"jeep-api-v0.2.2": map[string][]string{
+		"jeep-api-v0.1.0": map[string][]string{
 			"s":          []string{"CMD010", "CMD020"},
 			"w":          []string{"CMD010", "CMD020", "CMD012", "CMD022"},
 			"a":          []string{"CMD010", "CMD020", "CMD012", "CMD122"},

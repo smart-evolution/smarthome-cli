@@ -1,7 +1,7 @@
 package cmdapi
 
 var (
-	ApiMap = map[string]string {
+	ApiMap = map[string]string{
 		"jeep-v0.2.2": "jeep-api-v0.1.0",
 	}
 	Comms = map[string]map[string][]string{

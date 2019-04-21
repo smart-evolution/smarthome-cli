@@ -57,7 +57,8 @@ func Handler() {
 		input, _ := reader.ReadString('\n')
 		cmd := strings.TrimSpace(input)
 
-		hardwareComms := cmdapi.Comms[devType][cmd]
+		apiVersion := cmdapi.ApiMap[devType]
+		hardwareComms := cmdapi.Comms[apiVersion][cmd]
 
 		for _, c := range hardwareComms {
 			_, err = conn.Write([]byte(c))

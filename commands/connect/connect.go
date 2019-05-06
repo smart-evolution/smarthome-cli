@@ -43,7 +43,7 @@ func Handler() {
 
 	devType := string(buff[:n])
 
-	if _, ok := cmdapi.Comms[devType]; !ok {
+	if _, ok := cmdapi.ApiMap[devType]; !ok {
 		fmt.Println("unknown device type '" + devType + "'")
 		os.Exit(1)
 	}
@@ -57,7 +57,8 @@ func Handler() {
 		input, _ := reader.ReadString('\n')
 		cmd := strings.TrimSpace(input)
 
-		hardwareComms := cmdapi.Comms[devType][cmd]
+		apiVersion := cmdapi.ApiMap[devType]
+		hardwareComms := cmdapi.Comms[apiVersion][cmd]
 
 		for _, c := range hardwareComms {
 			_, err = conn.Write([]byte(c))

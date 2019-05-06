@@ -43,7 +43,7 @@ func Handler() {
 
 	devType := string(buff[:n])
 
-	if _, ok := cmdapi.Comms[devType]; !ok {
+	if _, ok := cmdapi.ApiMap[devType]; !ok {
 		fmt.Println("unknown device type '" + devType + "'")
 		os.Exit(1)
 	}
